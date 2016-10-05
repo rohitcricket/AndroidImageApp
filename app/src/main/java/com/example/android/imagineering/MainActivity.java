@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,5 +23,16 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this)
                 .load("http://wallpaperrs.com/uploads/cars/bmw-7-series-3725.jpg")
                 .into(imageView);
+
+        //Creating Rest Services
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WeatherAPI service = retrofit.create(WeatherAPI.class);
+
+        Call<Model> call = service.getWeatherReport();
+
     }
 }
